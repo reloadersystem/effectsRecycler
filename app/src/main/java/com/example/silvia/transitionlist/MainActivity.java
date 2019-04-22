@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         mData.add(new NewsItems("Matematica", "just for testing purpose i will the news list with random data","8 July 2018", R.drawable.data3));
         mData.add(new NewsItems("Algebra", "just for testing purpose i will the news list with random data","9 July 2018", R.drawable.data4));
         mData.add(new NewsItems("Trigonometría", "just for testing purpose i will the news list with random data","10 July 2018", R.drawable.data5));
+        mData.add(new NewsItems("Lenguaje", "just for testing purpose i will the news list with random data","11 July 2018", R.drawable.data1));
+        mData.add(new NewsItems("Historia", "just for testing purpose i will the news list with random data","12 July 2018", R.drawable.data2));
 
 //adapter ini and setup
 
