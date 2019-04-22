@@ -13,11 +13,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>
+        implements View.OnClickListener
+
+{
 
 
     Context mContext;
     List<NewsItems> mData;
+
+    private View.OnClickListener listener;
 
     public NewsAdapter(Context mContext, List<NewsItems> mData) {
         this.mContext = mContext;
@@ -29,7 +34,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View layout;
-        layout= LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+        layout = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+
+        //escuchador  de click
+
+        layout.setOnClickListener(this);
         return new NewsViewHolder(layout);
     }
 
@@ -45,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         //first lets create a reference to it
         //you can  use the previous animation like  the  following
 //efecto  union foto  mas  celda salida  izquierda a derecha
-       /* newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));*/
+        /* newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));*/
 // probamos solo escalar
         newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
 
@@ -54,7 +63,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         newsViewHolder.tv_date.setText(mData.get(position).getDate());
         newsViewHolder.img_user.setImageResource(mData.get(position).getUserPhoto());
 
-
     }
 
     @Override
@@ -62,9 +70,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return mData.size();
     }
 
+    //metodo para  click listener
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder
-    {
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        //validacion click listener
+
+        if (listener != null) {
+            listener.onClick(view);
+        }
+    }
+
+
+    public class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView tv_title, tv_content, tv_date;
         ImageView img_user;
 
@@ -76,12 +99,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public NewsViewHolder(View itemView) {
             super(itemView);
 
-            container= itemView.findViewById(R.id.action_container);
+            container = itemView.findViewById(R.id.action_container);
 
-            tv_title= itemView.findViewById(R.id.tv_title);
-            tv_content= itemView.findViewById(R.id.tv_description);
-            tv_date= itemView.findViewById(R.id.tv_date);
-            img_user= itemView.findViewById(R.id.img_user);
+            tv_title = itemView.findViewById(R.id.tv_title);
+            tv_content = itemView.findViewById(R.id.tv_description);
+            tv_date = itemView.findViewById(R.id.tv_date);
+            img_user = itemView.findViewById(R.id.img_user);
 
         }
     }

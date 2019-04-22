@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
 //adapter ini and setup
 
         newsAdapter= new NewsAdapter(this, mData);
+
+        newsAdapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //mi metodo onclick  creado
+
+                Toast.makeText(MainActivity.this, "Selección: " + mData.get(NewsRecyclerview.getChildAdapterPosition(view)).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
         NewsRecyclerview.setAdapter(newsAdapter);
         NewsRecyclerview.setLayoutManager(new LinearLayoutManager(this));
 
