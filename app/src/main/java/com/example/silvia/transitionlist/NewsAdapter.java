@@ -1,12 +1,13 @@
 package com.example.silvia.transitionlist;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         //we apply animation to view here
         //first  lets create  an animation userfoto
 //efecto  solo imagen
-        newsViewHolder.img_user.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));
+        //newsViewHolder.img_user.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));
 
         //let's create the animation for  the  whole  card
         //first lets create a reference to it
@@ -56,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 //efecto  union foto  mas  celda salida  izquierda a derecha
         /* newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition_animation));*/
 // probamos solo escalar
-        newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
+        // newsViewHolder.container.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_scale_animation));
 
         newsViewHolder.tv_title.setText(mData.get(position).getTitle());
         newsViewHolder.tv_content.setText(mData.get(position).getContent());
@@ -107,5 +108,32 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             img_user = itemView.findViewById(R.id.img_user);
 
         }
+    }
+
+    public void animatedCircularReveal(View view) {
+        int centerX = 0;
+        int centerY = 0;
+        int startRadius = 0;
+        int endRadius = Math.max(view.getWidth(), view.getHeight());
+        Animator animation = ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+        view.setVisibility(View.VISIBLE);
+        animation.start();
+    }
+
+    public void animatedCircularDelete(final View view, final int list_position) {
+        int centerX = view.getWidth();
+        int centerY = view.getHeight();
+        int startRadius = view.getWidth();
+        int endRadius = 0;
+        Animator animation = ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+        view.setVisibility(View.VISIBLE);
+        animation.start();
+
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull NewsViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        animatedCircularReveal(holder.itemView);
     }
 }
